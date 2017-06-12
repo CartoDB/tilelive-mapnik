@@ -1,5 +1,9 @@
 # tilelive-mapnik changelog
 
+## 0.6.18-cdb3 (not realesed)
+
+* Be able to configure tile timeout.
+
 ## 0.6.18-cdb2
 
 * Allow to configure buffer-size to 0
