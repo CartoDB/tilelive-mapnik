@@ -95,7 +95,7 @@ describe('Info ', function() {
     it('creates backend from string with correct internal boolean values 1', function(done) {
         new mapnik_backend('mapnik://./test/data/world.xml', function(err, source) {
             if (err) throw err;
-            assert.equal(source._autoLoadFonts,true);
+            assert.equal(source._uri.query.autoLoadFonts,true);
             assert.equal(source._uri.query.internal_cache,true);
             source.close(done);
         });
@@ -104,7 +104,7 @@ describe('Info ', function() {
     it('creates backend from string with correct internal boolean values 2', function(done) {
         new mapnik_backend('mapnik://./test/data/world.xml?autoLoadFonts=false&internal_cache=false', function(err, source) {
             if (err) throw err;
-            assert.equal(source._autoLoadFonts,false);
+            assert.equal(source._uri.query.autoLoadFonts,false);
             assert.equal(source._uri.query.internal_cache,false);
             source.close(done);
         });
@@ -122,7 +122,7 @@ describe('Info ', function() {
             xml: xml } , function(err, s) {
                 if (err) throw err;
                 source = s;
-                assert.equal(source._autoLoadFonts,false);
+                assert.equal(source._uri.query.autoLoadFonts,false);
                 assert.equal(source._uri.query.internal_cache,false);
                 source.close(done);
         });
