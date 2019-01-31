@@ -96,7 +96,7 @@ describe('Info ', function() {
         new mapnik_backend('mapnik://./test/data/world.xml', function(err, source) {
             if (err) throw err;
             assert.equal(source._autoLoadFonts,true);
-            assert.equal(source._internal_cache,true);
+            assert.equal(source._uri.query.internal_cache,true);
             source.close(done);
         });
     });
@@ -105,7 +105,7 @@ describe('Info ', function() {
         new mapnik_backend('mapnik://./test/data/world.xml?autoLoadFonts=false&internal_cache=false', function(err, source) {
             if (err) throw err;
             assert.equal(source._autoLoadFonts,false);
-            assert.equal(source._internal_cache,false);
+            assert.equal(source._uri.query.internal_cache,false);
             source.close(done);
         });
     });
@@ -123,7 +123,7 @@ describe('Info ', function() {
                 if (err) throw err;
                 source = s;
                 assert.equal(source._autoLoadFonts,false);
-                assert.equal(source._internal_cache,false);
+                assert.equal(source._uri.query.internal_cache,false);
                 source.close(done);
         });
     });
