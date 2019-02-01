@@ -4,17 +4,13 @@ var mapnik_backend = require('..');
 
 describe('Closing behavior ', function() {
 
-    it('should close cleanly 1', function(done) {
-        new mapnik_backend('mapnik://./test/data/world.xml', function(err, source) {
-            if (err) throw err;
-            var cache_len = Object.keys(source._cache).length;
-            assert.ok(source._cache[source._self_cache_key]);
-            // now close the source
-            source.close(function(err){
-                assert.equal(err,undefined);
-                var new_cache_length = Object.keys(source._cache).length;
-                assert.equal(cache_len,new_cache_length+1);
-                assert.ok(!source._cache[source._self_cache_key]);
+    it('should close cleanly 1', function (done) {
+        new mapnik_backend('mapnik://./test/data/world.xml', function (err, source) {
+            assert.equal(err, undefined);
+            assert.equal(source.open, true);
+            source.close(function (err) {
+                assert.equal(err, undefined);
+                assert.equal(source.open, false);
                 done();
             });
         });
@@ -22,15 +18,15 @@ describe('Closing behavior ', function() {
 
     it('should close cleanly 2', function(done) {
         new mapnik_backend('mapnik://./test/data/world.xml', function(err, source) {
-            if (err) throw err;
-            source.getTile(0,0,0, function(err, info, headers) {
-                if (err) throw err;
-                var cache_len = Object.keys(source._cache).length;
+            assert.equal(err, undefined);
+            assert.equal(source.open, true);
+            source.getTile(0,0,0, function (err) {
+                assert.equal(err, undefined);
+                assert.equal(source.open, true);
                 // now close the source
                 source.close(function(err){
-                    assert.equal(err,undefined);
-                    var new_cache_length = Object.keys(source._cache).length;
-                    assert.equal(cache_len,new_cache_length+1);
+                    assert.equal(err, undefined);
+                    assert.equal(source.open, false);
                     done();
                 });
             });
