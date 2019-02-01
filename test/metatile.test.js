@@ -1,5 +1,5 @@
 var assert = require('assert');
-var calculateMetatile = require('../lib/metatile');
+var { calculateMetatile } = require('../lib/metatile');
 
 var FULL = 20037508.342789244;
 var HALF = 0;
