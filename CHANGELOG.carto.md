@@ -1,7 +1,8 @@
 # tilelive-mapnik changelog
 
 ## 0.6.18-cdb17
-
+* Be able to load maps with custom pool size and max waiting clients
+* Update `generic-pool` to `3.5.0`.
 
 ## 0.6.18-cdb16
 * Make all modules to use strict mode semantics.
