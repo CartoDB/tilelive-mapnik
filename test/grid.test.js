@@ -61,9 +61,7 @@ describe('Render ', function() {
                         fs.writeFileSync(expected,JSON.stringify(info, null, 4));
                     }
                     assert.deepEqual(info, JSON.parse(fs.readFileSync('test/fixture/grids/' + key + '.grid.json', 'utf8')));
-                    assert.deepEqual(headers, {
-                        "Content-Type": "application/json"
-                    });
+                    assert.equal(headers["Content-Type"], "application/json");
                     ++count;
                     if (count == array.length) {
                         assert.deepEqual(completion,tileCoordsCompletion);
@@ -77,9 +75,7 @@ describe('Render ', function() {
             source.getGrid(31, 0, 0, function(err, info, headers) {
                 if (err) throw err;
                 assert.deepEqual(info, JSON.parse(fs.readFileSync('test/fixture/grids/empty.grid.json', 'utf8')));
-                assert.deepEqual(headers, {
-                    "Content-Type": "application/json"
-                });
+                assert.equal(headers["Content-Type"], "application/json");
                 done();
             });
         });
