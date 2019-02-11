@@ -1,5 +1,14 @@
 # tilelive-mapnik changelog
 
+## 0.6.18-cdb18
+* Huge refactor to have under control this module. Tons of work done, it keeps compatibility with the current tilelive interface and removes unnecessary complexity. A list of highlights:
+  - Split functionality in different modules to reflect the main pieces of this module.
+  - Follow Node.js rules and remove bad practices.
+  - Remove duplications, dead code and, redundant checks.
+  - Remove unused internals caches (solid and global).
+  - Handle parallel tasks with promises.
+
+
 ## 0.6.18-cdb17
 * Be able to load maps with custom pool size and max waiting clients
 * Update `generic-pool` to `3.5.0`.

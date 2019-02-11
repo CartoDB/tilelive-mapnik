@@ -1,10 +1,8 @@
-var assert = require('assert');
-var mapnik_backend = require('..');
+const assert = require('assert');
+const normalizeURI = require('../lib/uri');
 
 describe('uri query options', function() {
-
     describe('metatileCache config', function() {
-
         function makeUri(metatileCache) {
             return {
                 query: {
@@ -13,20 +11,7 @@ describe('uri query options', function() {
             };
         }
 
-        var backend;
-        var source;
-        before(function(done) {
-            backend = new mapnik_backend('mapnik://./test/data/test.xml', function(err, s) {
-                if (err) throw err;
-                source = s;
-                done();
-            });
-        });
-        after(function(done) {
-            source.close(done);
-        });
-
-        var scenarios = [
+        const scenarios = [
             {
                 desc: 'handles no config as default values',
                 metatileCache: undefined,
@@ -97,9 +82,8 @@ describe('uri query options', function() {
         ];
 
         scenarios.forEach(function(scenario) {
-
-            it(scenario.desc, function() {
-                var uri = backend._normalizeURI(makeUri(scenario.metatileCache));
+            it(scenario.desc, function () {
+                const uri = normalizeURI(makeUri(scenario.metatileCache));
 
                 assert.ok(uri.query.metatileCache);
                 assert.equal(uri.query.metatileCache.ttl, scenario.expected.ttl);
@@ -109,7 +93,6 @@ describe('uri query options', function() {
     });
 
     describe('metrics', function() {
-
         function makeUri(metrics) {
             const uri = {
                 protocol : "mapnik:",
@@ -125,20 +108,17 @@ describe('uri query options', function() {
         }
 
         it('Defaults to false', function() {
-            var uri = makeUri();
-            new mapnik_backend(uri, function() {});
+            const uri = normalizeURI(makeUri());
             assert(uri.query.metrics === false);
         });
 
         it('Set to false', function() {
-            var uri = makeUri(false);
-            new mapnik_backend(uri, function() {});
+            const uri = normalizeURI(makeUri(false));
             assert(uri.query.metrics === false);
         });
 
         it('Set to true', function() {
-            var uri = makeUri(true);
-            new mapnik_backend(uri, function() {});
+            const uri = normalizeURI(makeUri(true));
             assert(uri.query.metrics === true);
         });
     });
