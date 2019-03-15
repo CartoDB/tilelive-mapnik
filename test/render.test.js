@@ -8,8 +8,8 @@ describe('Render ', function() {
     it('getTile() override format', function(done) {
         new mapnik_backend('mapnik://./test/data/test.xml', function(err, source) {
             if (err) throw err;
-            assert.equal(source._info.format,undefined); // so will default to png in getTile
-            source._info.format = 'jpeg:quality=20';
+            assert.equal(source._format,undefined); // so will default to png in getTile
+            source._format = 'jpeg:quality=20';
             source.getTile(0,0,0, function(err, tile, headers, stats) {
                 assert.ok(stats);
                 assert.ok(stats.hasOwnProperty('render'));
@@ -86,7 +86,7 @@ describe('Render ', function() {
         it('validates', function(done) {
             var count = 0;
             tileCoords.forEach(function(coords,idx,array) {
-                source._info.format = 'png32';
+                source._format = 'png32';
                 source.getTile(coords[0], coords[1], coords[2],
                    function(err, tile, headers) {
                       if (err) throw err;
@@ -131,7 +131,7 @@ describe('Render ', function() {
         it('validates', function(done) {
             var count = 0;
             tileCoords.forEach(function(coords,idx,array) {
-                source._info.format = 'png32';
+                source._format = 'png32';
                 source.getTile(coords[0], coords[1], coords[2],
                    function(err, tile, headers) {
                       if (err) throw err;
@@ -182,7 +182,7 @@ describe('Render ', function() {
         it('validates buffer-size', function(done) {
             var count = 0;
             tiles.forEach(function (coords, idx, array) {
-                source._info.format = 'png32';
+                source._format = 'png32';
                 source.getTile(coords[0], coords[1], coords[2],
                    function(err, tile, headers) {
                       if (err) throw err;
