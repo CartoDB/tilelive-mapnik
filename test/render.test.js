@@ -6,7 +6,7 @@ var util = require('util');
 describe('Render ', function() {
 
     it('getTile() override format', function(done) {
-        new mapnik_backend('mapnik://./test/data/test.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/test.xml', 'utf8'), base: './test/data/' }, function(err, source) {
             if (err) throw err;
             assert.equal(source._format,undefined); // so will default to png in getTile
             source._format = 'jpeg:quality=20';
@@ -28,7 +28,7 @@ describe('Render ', function() {
     });
 
     it('getTile() renders zoom>30', function(done) {
-        new mapnik_backend('mapnik://./test/data/test.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/test.xml', 'utf8'), base: './test/data/' }, function(err, source) {
             if (err) throw err;
             source.getTile(31, 0, 0, function(err, tile, headers) {
                 assert.imageEqualsFile(tile, 'test/fixture/tiles/zoom-31.png', function(err) {
@@ -77,7 +77,8 @@ describe('Render ', function() {
         var source;
         var completion = {};
         before(function(done) {
-            new mapnik_backend('mapnik://./test/data/world.xml', function(err, s) {
+
+            new mapnik_backend({ xml: fs.readFileSync('./test/data/world.xml', 'utf8'), base: './test/data/' }, function(err, s) {
                 if (err) throw err;
                 source = s;
                 done();
@@ -117,12 +118,12 @@ describe('Render ', function() {
         var source;
         var completion = {};
         before(function(done) {
-            var xml = fs.readFileSync('./test/data/world.xml', 'utf8');
             new mapnik_backend({
                 protocol: 'mapnik:',
-                pathname: './test/data/world.xml',
                 search: '?' + Date.now(), // prevents caching
-                xml: xml } , function(err, s) {
+                xml: fs.readFileSync('./test/data/world.xml', 'utf8'),
+                base: './test/data/'
+            } , function(err, s) {
                     if (err) throw err;
                     source = s;
                     done();
@@ -165,12 +166,11 @@ describe('Render ', function() {
         var source;
         var completion = {};
         before(function(done) {
-            var xml = fs.readFileSync('./test/data/world_labels.xml', 'utf8');
             new mapnik_backend({
                 protocol: 'mapnik:',
-                pathname: './test/data/world_labels.xml',
                 search: '?' + Date.now(), // prevents caching
-                xml: xml,
+                xml: fs.readFileSync('./test/data/world_labels.xml', 'utf8'),
+                base: './test/data/',
                 query: {
                     bufferSize: 0
                 }} , function(err, s) {
@@ -217,7 +217,8 @@ describe('Render ', function() {
             it('Color ' + custom_color, function(done) {
                 var uri = {
                     protocol : "mapnik:",
-                    pathname : "./test/data/world_variable.xml",
+                    xml : fs.readFileSync('./test/data/world_variable.xml', 'utf8'),
+                    base: './test/data/',
                     query : {
                         variables : { "customColor" : custom_color }
                     }
@@ -243,7 +244,8 @@ describe('Render ', function() {
     it('Works with metatiles', function(done) {
         var uri = {
             protocol : "mapnik:",
-            pathname : "./test/data/world.xml",
+            xml : fs.readFileSync('./test/data/world.xml', 'utf8'),
+            base: './test/data/',
             metatile: 4,
             query : {
                 metrics : true
@@ -268,7 +270,8 @@ describe('getTile() metrics', function() {
     it('Gets metrics', function(done) {
         var uri = {
             protocol : "mapnik:",
-            pathname : "./test/data/world.xml",
+            xml : fs.readFileSync('./test/data/world.xml', 'utf8'),
+            base: './test/data/',
             query : {
                 metrics : true
             }

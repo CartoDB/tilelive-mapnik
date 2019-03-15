@@ -35,7 +35,6 @@ describe('Pool Render ', function() {
             const xml = fs.readFileSync('./test/data/world.xml', 'utf8');
             const uri = {
                 protocol: 'mapnik:',
-                pathname: './test/data/world.xml',
                 metatile: 4,
                 xml,
                 query: {

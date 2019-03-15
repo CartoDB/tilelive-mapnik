@@ -5,7 +5,8 @@ var mapnik_backend = require('..');
 describe('Closing behavior ', function() {
 
     it('should close cleanly 1', function (done) {
-        new mapnik_backend('mapnik://./test/data/world.xml', function (err, source) {
+
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/world.xml', 'utf8') }, function (err, source) {
             assert.equal(err, undefined);
             assert.equal(source.open, true);
             source.close(function (err) {
@@ -17,7 +18,7 @@ describe('Closing behavior ', function() {
     });
 
     it('should close cleanly 2', function(done) {
-        new mapnik_backend('mapnik://./test/data/world.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/world.xml', 'utf8'), base: './test/data/' }, function(err, source) {
             assert.equal(err, undefined);
             assert.equal(source.open, true);
             source.getTile(0,0,0, function (err) {
@@ -34,7 +35,7 @@ describe('Closing behavior ', function() {
     });
 
     it('should throw with invalid usage (close before getTile)', function(done) {
-        new mapnik_backend('mapnik://./test/data/world.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/world.xml', 'utf8') }, function(err, source) {
             if (err) throw err;
             // now close the source
             // now that the pool is draining further
@@ -50,7 +51,7 @@ describe('Closing behavior ', function() {
     });
 
     it('should throw with invalid usage (close after getTile)', function(done) {
-        new mapnik_backend('mapnik://./test/data/world.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/world.xml', 'utf8') }, function(err, source) {
             if (err) throw err;
             source.getTile(0,0,0, function(err, info, headers) {
                 // now close the source

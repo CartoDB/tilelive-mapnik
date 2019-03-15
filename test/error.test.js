@@ -3,11 +3,10 @@ var assert = require('./support/assert');
 var mapnik_backend = require('..');
 var util = require('util');
 
-
 describe('Handling Errors ', function() {
 
     it('invalid style', function(done) {
-        new mapnik_backend('mapnik://./test/data/invalid_style.xml', function (err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/invalid_style.xml', 'utf8') }, function (err, source) {
             assert.ifError(err);
             source.getTile(0, 0, 0, (err) => {
                 assert.ok(err);
@@ -20,7 +19,7 @@ describe('Handling Errors ', function() {
 
     // See https://github.com/mapbox/tilelive-mapnik/pull/74
     it('invalid font, strict', function(done) {
-        new mapnik_backend({pathname:'./test/data/invalid_font_face.xml', strict:true}, function (err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/invalid_font_face.xml', 'utf8'), strict: true }, function (err, source) {
             assert.ifError(err);
             source.getTile(0, 0, 0, (err) => {
                 assert.ok(err);
@@ -32,22 +31,22 @@ describe('Handling Errors ', function() {
 
     // See https://github.com/mapbox/tilelive-mapnik/pull/74
     it('invalid font, non-strict (default)', function(done) {
-        new mapnik_backend({pathname:'./test/data/invalid_font_face.xml'}, function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/invalid_font_face.xml', 'utf8') }, function(err, source) {
             assert.ok(!err, err);
             source.close(done);
         });
     });
 
     it('missing data', function(done) {
-        new mapnik_backend('mapnik://./test/data/missing.xml', function(err) {
+        new mapnik_backend({}, function(err) {
             assert.ok(err);
-            assert.equal(err.code, "ENOENT");
+            assert.equal(err.message, 'No XML provided');
             done();
         });
     });
 
     it('bad style', function(done) {
-        new mapnik_backend('mapnik://./test/data/world_bad.xml', function (err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/world_bad.xml', 'utf8') }, function (err, source) {
             assert.ifError(err);
             source.getTile(0, 0, 0, (err) => {
                 assert.ok(err);
@@ -58,7 +57,7 @@ describe('Handling Errors ', function() {
     });
 
     it('invalid image format', function(done) {
-        new mapnik_backend('mapnik://./test/data/test.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/test.xml', 'utf8'), base: './test/data/' }, function(err, source) {
             if (err) throw err;
             source._format = 'this is an invalid image format';
             source.getTile(0,0,0, function(err) {
@@ -69,7 +68,7 @@ describe('Handling Errors ', function() {
     });
 
     it('invalid image format 2', function(done) {
-        new mapnik_backend('mapnik://./test/data/test.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/test.xml', 'utf8'), base: './test/data/' }, function(err, source) {
             if (err) throw err;
             source._format = 'png8:z=20';
             source.getTile(0,0,0, function(err, tile, headers) {
@@ -82,7 +81,7 @@ describe('Handling Errors ', function() {
     ['getTile', 'getGrid'].forEach(function(method) {
 
         it('coordinates out of range: ' + method, function(done) {
-            new mapnik_backend('mapnik://./test/data/test.xml', function(err, source) {
+            new mapnik_backend({ xml: fs.readFileSync('./test/data/test.xml', 'utf8') }, function(err, source) {
                 if (err) throw err;
                 source[method](0, -1, 0, function(err) {
                     assert(err.message.match(/Coordinates out of range/), 'error message mismatch: ' + err.message);
@@ -92,7 +91,7 @@ describe('Handling Errors ', function() {
         });
 
         it('coordinates out of range, not finite: ' + method, function(done) {
-            new mapnik_backend('mapnik://./test/data/test.xml', function(err, source) {
+            new mapnik_backend({ xml: fs.readFileSync('./test/data/test.xml', 'utf8') }, function(err, source) {
                 if (err) throw err;
                 source[method](1024, 0, 0, function(err) {
                     assert(err.message.match(/Coordinates out of range/), 'error message mismatch: ' + err.message);
