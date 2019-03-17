@@ -32,11 +32,11 @@ describe('Pool Render ', function() {
         let source;
 
         before(function(done) {
-            const xml = fs.readFileSync('./test/data/world.xml', 'utf8');
             const uri = {
                 protocol: 'mapnik:',
                 metatile: 4,
-                xml,
+                xml: fs.readFileSync('./test/data/world.xml', 'utf8'),
+                base: './test/data/',
                 query: {
                     poolSize: 1,
                     poolMaxWaitingClients: 1
