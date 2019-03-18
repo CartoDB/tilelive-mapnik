@@ -1,5 +1,16 @@
 # tilelive-mapnik changelog
 
+## 0.6.18-cdb19
+2019-03-dd
+- Upgrade generic-pool to version 3.6.1
+- Removed:
+  - `.findID()`
+  - `.toJSON()`
+  - `.getInfo()`
+  - `.list()`
+  - `pathname` is no longer supported as input
+
+
 ## 0.6.18-cdb18
 * Huge refactor to have under control this module. Tons of work done, it keeps compatibility with the current tilelive interface and removes unnecessary complexity. A list of highlights:
   - Split functionality in different modules to reflect the main pieces of this module.
