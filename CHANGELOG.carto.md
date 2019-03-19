@@ -1,5 +1,10 @@
 # tilelive-mapnik changelog
 
+## 0.6.18-cdb20
+2019-mm-dd
+- Add header to know when a tile comes from cache (metatiling)
+
+
 ## 0.6.18-cdb19
 2019-03-19
 - Upgrade generic-pool to version 3.6.1

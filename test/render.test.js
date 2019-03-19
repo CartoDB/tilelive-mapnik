@@ -14,11 +14,10 @@ describe('Render ', function() {
                 assert.ok(stats);
                 assert.ok(stats.hasOwnProperty('render'));
                 assert.ok(stats.hasOwnProperty('encode'));
+                assert.equal(headers["Content-Type"], "image/jpeg");
                 assert.imageEqualsFile(tile, 'test/fixture/tiles/world-jpeg20.jpeg', 0.05, 'jpeg:quality=20', function(err, similarity) {
                     if (err) throw err;
-                    assert.deepEqual(headers, {
-                        "Content-Type": "image/jpeg"
-                    });
+
                     source.close(function(err){
                         done();
                     });
@@ -33,9 +32,7 @@ describe('Render ', function() {
             source.getTile(31, 0, 0, function(err, tile, headers) {
                 assert.imageEqualsFile(tile, 'test/fixture/tiles/zoom-31.png', function(err) {
                     if (err) throw err;
-                    assert.deepEqual(headers, {
-                        "Content-Type": "image/png"
-                    });
+                    assert.equal(headers["Content-Type"], "image/png");
                     source.close(function(){
                         done();
                     });
@@ -98,9 +95,7 @@ describe('Render ', function() {
                       assert.imageEqualsFile(tile, 'test/fixture/tiles/transparent_' + key + '.png', function(err, similarity) {
                           completion['tile_' + key] = true;
                           if (err) throw err;
-                          assert.deepEqual(headers, {
-                              "Content-Type": "image/png"
-                          });
+                          assert.equal(headers["Content-Type"], "image/png");
                           ++count;
                           if (count == array.length) {
                               assert.deepEqual(completion,tileCoordsCompletion);
@@ -140,9 +135,7 @@ describe('Render ', function() {
                       assert.imageEqualsFile(tile, 'test/fixture/tiles/transparent_' + key + '.png', function(err, similarity) {
                           completion['tile_' + key] = true;
                           if (err) throw err;
-                          assert.deepEqual(headers, {
-                              "Content-Type": "image/png"
-                          });
+                          assert.equal(headers["Content-Type"], "image/png");
                           ++count;
                           if (count == array.length) {
                               assert.deepEqual(completion,tileCoordsCompletion);
@@ -193,9 +186,7 @@ describe('Render ', function() {
                       assert.imageEqualsFile(tile, filepath, function(err, similarity) {
                           completion['tile_buffer_size_' + key] = true;
                           if (err) throw err;
-                          assert.deepEqual(headers, {
-                              "Content-Type": "image/png"
-                          });
+                          assert.equal(headers["Content-Type"], "image/png");
                           ++count;
                           if (count == array.length) {
 
@@ -230,9 +221,7 @@ describe('Render ', function() {
                         if (err) throw err;
                         assert.imageEqualsFile(tile, 'test/fixture/tiles/transparent_2_2_2_' + custom_color + '.png', function(err, similarity) {
                             if (err) throw err;
-                            assert.deepEqual(headers, {
-                                "Content-Type": "image/png"
-                            });
+                            assert.equal(headers["Content-Type"], "image/png");
                             source.close(done);
                         });
                     });
