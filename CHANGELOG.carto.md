@@ -1,7 +1,7 @@
 # tilelive-mapnik changelog
 
 ## 0.6.18-cdb19
-2019-03-dd
+2019-03-19
 - Upgrade generic-pool to version 3.6.1
 - Removed:
   - `.findID()`
