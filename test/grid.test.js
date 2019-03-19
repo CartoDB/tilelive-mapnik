@@ -36,7 +36,7 @@ describe('Render ', function() {
         var source;
         var completion = {};
         before(function(done) {
-            new mapnik_backend('mapnik://./test/data/test.xml', function(err, s) {
+            new mapnik_backend({ xml: fs.readFileSync('./test/data/test.xml', 'utf8'), base: './test/data/' }, function(err, s) {
                 if (err) throw err;
                 source = s;
                 done();
@@ -85,7 +85,7 @@ describe('Render ', function() {
 describe('Grid Render Errors ', function() {
 
     it('invalid layer', function(done) {
-        new mapnik_backend('mapnik://./test/data/invalid_interactivity_1.xml', function(err, source) {
+        new mapnik_backend({ xml: fs.readFileSync('./test/data/invalid_interactivity_1.xml', 'utf8'), base: './test/data/' }, function(err, source) {
             if (err) throw err;
             source.getGrid(0, 0, 0, function(err, info, headers) {
                 assert.ok(err);
@@ -104,7 +104,8 @@ describe('Grid metrics', function() {
     it('Gets metrics', function(done) {
         var uri = {
             protocol : "mapnik:",
-            pathname : "./test/data/test.xml",
+            xml : fs.readFileSync('./test/data/test.xml', 'utf8'),
+            base: './test/data/',
             query : {
                 metrics : true
             }

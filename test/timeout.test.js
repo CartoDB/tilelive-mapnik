@@ -6,7 +6,8 @@ var util = require('util');
 describe('Timeout', function () {
     var completion = {};
     var baseUri = {
-        pathname: './test/data/world.xml',
+        xml : fs.readFileSync('./test/data/world.xml', 'utf8'),
+        base: './test/data/',
         query: {
             limits: {
                 render: 1,
