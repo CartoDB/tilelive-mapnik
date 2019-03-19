@@ -1,5 +1,6 @@
 const assert = require('assert');
 const normalizeURI = require('../lib/uri');
+const fs = require('fs');
 
 describe('uri query options', function() {
     describe('metatileCache config', function() {
@@ -96,7 +97,8 @@ describe('uri query options', function() {
         function makeUri(metrics) {
             const uri = {
                 protocol : "mapnik:",
-                pathname : "./test/data/test.xml",
+                xml : fs.readFileSync('./test/data/test.xml', 'utf8'),
+                base: './test/data/',
                 query : { }
             };
 
