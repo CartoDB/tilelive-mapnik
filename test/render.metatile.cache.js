@@ -37,14 +37,13 @@ describe('Render Metatile Cache Headers ', function() {
         let source;
 
         before(function(done) {
-            const xml = fs.readFileSync('./test/data/world.xml', 'utf8');
             const uri = {
                 protocol: 'mapnik:',
-                pathname: './test/data/world.xml',
+                xml: fs.readFileSync('./test/data/world.xml', 'utf8'),
+                base: './test/data/',
                 query:{
                     metatile: 2
-                },
-                xml
+                }
             };
 
             new MapnikBackend(uri, (err, _source) => {
