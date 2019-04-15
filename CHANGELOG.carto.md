@@ -1,7 +1,7 @@
 # tilelive-mapnik changelog
 
 ## 0.6.18-cdb21
-2019-XX-XX
+2019-04-15
 - Update @carto/mapnik to [`3.6.2-carto.13`](https://github.com/CartoDB/node-mapnik/blob/v3.6.2-carto.13/CHANGELOG.carto.md#362-carto13).
 
 ## 0.6.18-cdb20
