@@ -1,6 +1,6 @@
 {
     "name": "tilelive-mapnik",
-    "version": "0.6.18-cdb20",
+    "version": "0.6.18-cdb21",
     "main": "./lib/mapnik_backend.js",
     "description": "Mapnik backend for tilelive",
     "url": "http://github.com/mapbox/tilelive-mapnik",
@@ -27,7 +27,7 @@
         "Blake Thompson <flippmoke>"
     ],
     "dependencies": {
-        "@carto/mapnik": "3.6.2-carto.11",
+        "@carto/mapnik": "3.6.2-carto.13",
         "generic-pool": "^3.6.1",
         "mime": "2.3.1"
     },
